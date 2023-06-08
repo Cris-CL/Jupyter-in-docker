@@ -1,0 +1,19 @@
+# packaging
+pip>=9
+
+# data science
+numpy==1.23.4
+pandas==1.5.1
+
+#Google functions basic
+
+fsspec==2022.11.0
+pandas-gbq>=0.17.9
+google-cloud-bigquery>=3.3.5
+gcsfs>=2022.11.0
+pyarrow==9.0.0
+
+# API
+gcsfs
+google-cloud-bigquery
+google-cloud-storage
