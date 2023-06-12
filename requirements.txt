@@ -18,3 +18,6 @@ functions-framework==3.*
 gcsfs
 google-cloud-bigquery
 google-cloud-storage
+
+# Jupyter
+jupyter
