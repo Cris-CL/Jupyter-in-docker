@@ -1,0 +1,6 @@
+version: '1'
+
+services:
+  man:
+    build: .
+    image: test_g/gclenv:v1

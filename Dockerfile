@@ -1,8 +1,32 @@
+# Use the official Ubuntu 22.04 as the base image
 FROM ubuntu:22.04
 
-COPY requirements.txt ./
+# Update the package lists and install necessary dependencies
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Add the deadsnakes PPA to get Python 3.10
+RUN add-apt-repository -y ppa:deadsnakes/ppa
 
-CMD uvicorn api.fast:app --host 0.0.0.0 --port $PORT
+# Update the package lists again
+RUN apt-get update
+
+# Install Python 3.10 and pip
+RUN apt-get install -y python3.10 python3-pip
+
+# Set Python 3.10 as the default Python version
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
+
+# Set the default working directory
+WORKDIR /app
+
+# Copy the requirements file to the container
+COPY requirements.txt .
+
+# Install the Python packages from requirements.txt
+RUN pip3 install -r requirements.txt
+
+# Set the entry point
+CMD python3
