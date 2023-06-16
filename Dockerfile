@@ -1,7 +1,8 @@
 # Use the official Ubuntu 22.04 as the base image
 FROM ubuntu:22.04
 USER root
-RUN useradd -l -m -s /bin/bash "cris"
+# RUN useradd -l -m -s -R /bin/bash "cris"
+
 # Update the package lists and install necessary dependencies
 RUN apt-get update && apt-get install -y \
     software-properties-common \
@@ -31,7 +32,7 @@ COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
 # Set the entry pointdocker-machine ip
-USER cris
+# USER cris
 EXPOSE 8888
 
 CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
