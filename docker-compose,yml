@@ -2,5 +2,5 @@ version: '1'
 
 services:
   man:
-    build: .
+    build: --pull .
     image: test_g/gclenv:v1
