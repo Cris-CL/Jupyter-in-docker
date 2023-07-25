@@ -1,6 +1,6 @@
-version: '1'
+version: '2'
 
 services:
   man:
     build: --pull .
-    image: test_g/gclenv:v1
+    image: test_g/gclenv:v2
