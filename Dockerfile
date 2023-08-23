@@ -1,26 +1,13 @@
-# Use the official Ubuntu 22.04 as the base image
-FROM ubuntu:22.04
-USER root
-# RUN useradd -l -m -s -R /bin/bash "cris"
+# Use the official Alpine 3.18.3 as the base image
+FROM alpine:3.18.3
 
 # Update the package lists and install necessary dependencies
-RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add --no-cache python3 py3-pip py3-virtualenv curl
+# RUN apk add --no-cache py3-venv curl
 
-# Add the deadsnakes PPA to get Python 3.10
-RUN add-apt-repository -y ppa:deadsnakes/ppa
-
-# Update the package lists again
-RUN apt-get update
-
-# Install Python 3.10 and pip
-RUN apt-get install -y python3.10 python3-pip python3.10-venv
-# RUN apt-get install python3.10-venv
 
 # Set Python 3.10 as the default Python version
-RUN update-alternatives --install /usr/bin/python3 python /usr/bin/python3.10 1
+RUN ln -sf /usr/bin/python3.10 /usr/bin/python3
 
 # Set the default working directory
 WORKDIR /app
@@ -29,10 +16,13 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install the Python packages from requirements.txt
-RUN pip3 install -r requirements.txt
+# SHELL ["/bin/bash", "-c"]
 
-# Set the entry pointdocker-machine ip
-# USER cris
+# RUN py3-pip install --upgrade pip
+RUN py3-pip install -r requirements.txt
+
+# Expose the desired port
 EXPOSE 8888
 
+# Set the entry point
 CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
